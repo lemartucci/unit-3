@@ -28,7 +28,7 @@ function setMap() {
     //Data for map
     var promises = [
         d3.csv("data/NY_Agricultural_Practices.csv"),
-        d3.json("data/newyorkCounties.topojson"),
+        d3.json("data/newyorkCounties.topojson")
     ];
     Promise.all(promises).then(callback);//Fetching multiple datasets at once with Promise.All
 
@@ -39,7 +39,7 @@ function setMap() {
             console.log(csvData);
             console.log(newyork);
 
-        //translate newyork TopoJSON to geoJson
+        //translate newyorkCounties TopoJSON to geoJson
         var nyCounties = topojson.feature(newyork, newyork.objects.newyorkCounties).features;
 
         var county = map
