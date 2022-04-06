@@ -1,6 +1,5 @@
 window.onload = setMap();
 
-//Example 1.3 line 4...set up choropleth map
 function setMap() {
     //map frame dimensions
     var width = 960,
@@ -17,9 +16,9 @@ function setMap() {
     //create Albers equal area conic projection centered on New York State
     var projection = d3.geoAlbers()
         .center([0, 43.2994])//centered on NY (75 W, 43N) latitude and longitude
-        .rotate([-74.2179, 0, 0])
+        .rotate([74.2179, 0, 0])
         .parallels([74, 40])//Standard parallels
-        .scale(2500)
+        .scale(100)
         .translate([width / 2, height / 2]);
 
     var path = d3.geoPath()
@@ -40,7 +39,8 @@ function setMap() {
             console.log(newyork);
 
         //translate newyorkCounties TopoJSON to geoJson
-        var nyCounties = topojson.feature(newyork, newyork.objects.newyorkCounties).features;
+        var nyCounties = topojson.feature(newyork, newyork.objects.FINAL).features;
+        console.log(nyCounties);
 
         var county = map
             .selectAll(".county")
@@ -52,6 +52,9 @@ function setMap() {
             })
             .attr("d", path);//d defines the coordinates of path
     
+        }
+
+    }
              /*
         var graticule = d3.geoGraticule().step([5, 5]); //place graticule lines every 5 degrees of longitude and latitude
 
@@ -71,6 +74,4 @@ function setMap() {
             .attr("class", "gratLines") //assign class for styling
             .attr("d", path); //project graticule lines*/
 
-        }
-
-}
+     

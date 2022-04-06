@@ -5,12 +5,10 @@
     stroke-width: 1px;
     shape-rendering: crispEdges;
 }
-
 .axis text {
     font-family: sans-serif;
     font-size: 0.9em;
 }
-
 .title {
     font-family: sans-serif;
     font-size: 1.5em;
@@ -19,15 +17,11 @@
 .map {
     border: medium solid #999;
 }
-
-
-
 .county {
     fill: #fff;
     stroke: #CCC;
     stroke-width: 2px;
 }
-
 /*
 .gratLines {
     fill: none;
