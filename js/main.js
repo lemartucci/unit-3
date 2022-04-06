@@ -3,7 +3,7 @@ window.onload = setMap();
 function setMap() {
     //map frame dimensions
     var width = 960,
-        height = 460;
+        height = 500;
 
     //create new svg container for the map
     var map = d3
@@ -15,10 +15,10 @@ function setMap() {
 
     //create Albers equal area conic projection centered on New York State
     var projection = d3.geoAlbers()
-        .center([0, 43.2994])//centered on NY (75 W, 43N) latitude and longitude
+        .center([0, 43.2994])//centered on NY
         .rotate([74.2179, 0, 0])
         .parallels([74, 40])//Standard parallels
-        .scale(100)
+        .scale(4500)
         .translate([width / 2, height / 2]);
 
     var path = d3.geoPath()
@@ -51,12 +51,11 @@ function setMap() {
                 return "county" + d.properties.county;
             })
             .attr("d", path);//d defines the coordinates of path
-    
         }
 
     }
-             /*
-        var graticule = d3.geoGraticule().step([5, 5]); //place graticule lines every 5 degrees of longitude and latitude
+       /*
+            var graticule = d3.geoGraticule().step([5, 5]); //place graticule lines every 5 degrees of longitude and latitude
 
        //create graticule background
         var gratBackground = map
@@ -74,4 +73,3 @@ function setMap() {
             .attr("class", "gratLines") //assign class for styling
             .attr("d", path); //project graticule lines*/
 
-     
