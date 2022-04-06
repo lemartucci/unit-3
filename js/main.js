@@ -27,7 +27,8 @@ function setMap() {
     //Data for map
     var promises = [
         d3.csv("data/NY_Agricultural_Practices.csv"),
-        d3.json("data/newyorkCounties.topojson")
+        d3.json("data/newyorkCounties.topojson"),
+        d3.json("data/background.topojson")
     ];
     Promise.all(promises).then(callback);//Fetching multiple datasets at once with Promise.All
 
@@ -35,13 +36,28 @@ function setMap() {
     function callback(data) {
         var csvData = data[0],//csv data is first in array
             newyork = data[1];//new york is second in array
+            background = data[2]//background data 
             console.log(csvData);
             console.log(newyork);
 
         //translate newyorkCounties TopoJSON to geoJson
+        var backgroundArea = topojson.feature(background, background.objects.background_Project);
+       
+        console.log(backgroundArea);
+       
         var nyCounties = topojson.feature(newyork, newyork.objects.FINAL).features;
+        
         console.log(nyCounties);
-
+        
+    
+        //add the background states/Canada to the map
+        var area = map
+            .append("path")
+            .datum(backgroundArea)
+            .attr("class", "area")
+            .attr("d", path);
+        
+        //add NY counties to the map
         var county = map
             .selectAll(".county")
             .data(nyCounties)
