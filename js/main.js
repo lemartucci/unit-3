@@ -156,7 +156,7 @@
 	            .attr("class", "gratBackground") //assign class for styling
 	            .attr("d", path) //project graticule
 
-	            //create graticule lines
+	        //create graticule lines
 	        var gratLines = map.selectAll(".gratLines") //select graticule elements that will be created
 	            .data(graticule.lines()) //bind graticule lines to each element to be created
 	            .enter() //create an element for each datum
@@ -198,7 +198,6 @@
             "#31a354",
             "#006d2c",
 	    ];
-
         //create color scale generator for Equal Interval
         var colorScale = d3.scaleQuantile()
         .range(colorClasses);
@@ -221,7 +220,7 @@
             .enter()
             .append("path")
             .attr("class", function (d) {
-                return "county" + d.properties.county;
+                return "county " + d.properties. county;
             })
             .attr("d", path)//d defines the coordinates of path
             .style("fill", function(d){
