@@ -259,6 +259,7 @@
                 .text("Select Attribute");
             
             var attrOptions = dropdown//Adding options for each variable in drop down menu
+                
                 .selectAll("attrOptions")
                 .data(attrArray)
                 .enter()
@@ -266,10 +267,17 @@
                 .attr("value", function (d) {
                     return d;
                 })
-                .text(function (d) {
-                    return d;
-                });
-         }
+                .text(function (d) {//Update attribute names in drop down menu
+                    return d.replace ("alley", "Alley Cropping & Silvapasture")
+                        .replace ("cov_crop", "Cover Cropping")
+                        .replace("con_ease", "Conservation Easement")
+                        .replace("no_till", "No Tillage")
+                        .replace("conv_till", "Conventional Tillage")
+                        .replace("art_dit", "Artifical Ditch Drainage")
+                        .replace("tile", "Tile Drainage")
+                        .replace("graze", "Rotational/Intensive Grazing")
+                })
+         };
     function changeAttribute(attribute, csvData) {
                 
                 expressed = attribute;//Set pseudo global expressed variable to current attribute
@@ -325,9 +333,16 @@
                     }
                 });
             var chartTitle = d3.select(".chartTitle")
-                .text("Number of Farms Practicing " + expressed[10] + " in each county");
-    }
-
+                .text("Number of Farms Practicing " + expressed.replace("alley", "Alley Cropping")
+                    .replace ("cov_crop", "Cover Cropping")
+                    .replace("con_ease", "Conservation Easement")
+                    .replace("no_till", "No Tillage")
+                    .replace("conv_till", "Conventional Tillage")
+                    .replace("art_dit", "Artifical Ditch Drainage")
+                    .replace("tile", "Tile Drainage")
+                    .replace("graze", "Rotational/Intensive Grazing")
+                    + " in each county")
+            };
     function highlight(props) {
         //change stroke
         var selected = d3
@@ -365,9 +380,9 @@
         d3.select(".infolabel").remove();
     }
     function setLabel(props) {
-        console.log("Hello");
+        console.log("Hello Label");
         //label content
-        var labelAttribute = "<h1>" + props[expressed] + "</h1><b>" + expressed + "</b>";
+        var labelAttribute = "<h1>" + props[expressed]+ "</h1><b>" + expressed + "</b>";
 
         //create info label div
         var infolabel = d3
