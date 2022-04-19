@@ -341,7 +341,7 @@
                     .replace("art_dit", "Artifical Ditch Drainage")
                     .replace("tile", "Tile Drainage")
                     .replace("graze", "Rotational/Intensive Grazing")
-                    + " in each county")
+                    + " by county")
             };
     function highlight(props) {
         //change stroke
@@ -382,7 +382,15 @@
     function setLabel(props) {
         console.log("Hello Label");
         //label content
-        var labelAttribute = "<h1>" + props[expressed]+ "</h1><b>" + expressed + "</b>";
+        var labelAttribute = "<h1>" + "In " + props.NAME +",  "+ props[expressed]+ " farms practiced: " + expressed.replace("alley", "Alley Cropping & Silvapasture") 
+            .replace ("cov_crop", "Cover Cropping")
+            .replace("con_ease", "Conservation Easement")
+            .replace("no_till", "No Tillage")
+            .replace("conv_till", "Conventional Tillage")
+            .replace("art_dit", "Artifical Ditch Drainage")
+            .replace("tile", "Tile Drainage")
+            .replace("graze", "Rotational/Intensive Grazing")
+             + "</h1>";
 
         //create info label div
         var infolabel = d3
