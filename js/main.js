@@ -355,9 +355,9 @@
     //dehighlight function to prevent highlighting from being permanent
     function dehighlight() {
         var county = d3//dehighlight for map counties
-            .selectAll(".NAME")
+            .selectAll(".county")
             .style("stroke", "black")
-            .style("stroke-width", "0.5)");
+            .style("stroke-width", "0.5");
         
         var county = d3
             .selectAll(".bar")//dehighlight for bar counties
