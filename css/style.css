@@ -1,5 +1,5 @@
 html, body {
-    min-height: 120%;
+    min-height: 130%;
 }
 
 body{
@@ -8,16 +8,26 @@ body{
 
 h1{
     color:black;
-    padding-left: 25px;
     text-align: center;
+    font-family:Arial, Helvetica, sans-serif;
 }
-h4{
-    color: black;
+.column{
+    float:center;
+    top: 20px;
+    width: 100%;
+    height: 305px;
     padding-left: 15px;
-    text-align: left;
+    padding-right:15px;
+    margin-right: 10px;
+    padding-bottom: 10;
+    background-color: rgb(230, 227, 227, 0.5);
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:larger;
 }
-p {
-    padding-left: 15px;
+
+p{
+    font-size: medium;
+    font-family: Arial, Helvetica, sans-serif;
 }
 .map {
     border: medium solid black;
@@ -44,7 +54,7 @@ p {
 }
 .numbers {
     fill:#000;
-    font-family: sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
 }
 .chartTitle {
     font-family:Arial, Helvetica, sans-serif;
@@ -70,17 +80,17 @@ p {
     shape-rendering: crispEdges;
 }
 .axis text {
-    font-family: sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
     font-size: 0.8em;
     fill: rgb(14, 13, 13);
     font-weight: bold;
 }
 .dropdown {
     position: absolute;
-    top: 260px;
+    top: 400px;
     left: 40px;
     z-index: 10;
-    font-family: sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
     font-size: 1em;
     font-weight: bold;
     padding: 2px;
@@ -97,6 +107,7 @@ p {
     margin: 0 20px 0 0;
     padding: 0;
     display: inline-block;
+    text-align: center;
     line-height: 1em;
     font-size: small;
     color: black;
@@ -108,22 +119,23 @@ p {
     height: 40px;
     min-width: 60px;
     color: #fff;
-    background-color: #d3d3c9;
+    background-color: rgb(197, 197, 191);
     border: solid thin #fff;
     padding: 5px 10px;
     top: -75px;
 }
 .footer{
-    font-size: 4;
+    font-size:smaller;
     text-align: center;
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 35px;
+    height: 30px;
     background-color: rgb(126, 143, 134);
-    padding-bottom: 0px;
+    padding-bottom: 10px;
     color: whitesmoke;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 

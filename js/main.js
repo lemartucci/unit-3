@@ -1,7 +1,7 @@
 (function(){
-        var attrArray = ["alley", "con_ease", "no_till", "conv_till", "cov_crop", "art_dit", "tile", "graze"]; //list of attributes
+        var attrArray = ["alley", "con_ease", "no_till", "conv_till", "cov_crop", "art_dit", "tile", "graze"]; //list of attributes for map
 	    var expressed = attrArray[0]; //initial attribute selected in attrArray
-
+        //Chart dimensions
         var chartWidth = window.innerWidth * 0.425,
         chartHeight = 473,
         leftPadding = 25,
@@ -11,9 +11,9 @@
         chartInnerHeight = chartHeight - topBottomPadding * 2,
         translate = "translate(" + leftPadding + "," + topBottomPadding + ")";
 
-        var yScale= d3.scaleLinear().range([463,0]).domain([0,600]);//Scale bar range
+        var yScale= d3.scaleLinear().range([463,0]).domain([0,600]);//Scale bar range; Y scale bar
 
-        window.onload = setMap();
+        window.onload = setMap();//onload the map
 
         function setMap(){
             //map frame dimensions
@@ -39,7 +39,7 @@
             var path = d3.geoPath()
                 .projection(projection);//Applies projection to the data
 
-             //Data for map
+             //Data for map in Promises variable
             var promises = [
                 d3.csv("data/NY_Agricultural_Practices.csv"),
                 d3.json("data/newyorkCounties.topojson"),
@@ -52,11 +52,11 @@
             function callback(data) {
                 var csvData = data[0],//csv data is first in array
                     newyork = data[1];//new york is second in array
-                    background = data[2]//background data 
-                    console.log(csvData);
+                    background = data[2]//background data third in array
+                    console.log(csvData);//console log to see the data in console
                     console.log(newyork);
 
-                setGraticule(map,path);
+                setGraticule(map,path);//graticule for map
 
                 //translate newyorkCounties TopoJSON to geoJson
                 var backgroundArea = topojson.feature(background, background.objects.background_Project);
@@ -69,9 +69,9 @@
                     .attr("class", "area")
                     .attr("d", path);
 
-                nyCounties = joinData(nyCounties, csvData);
+                nyCounties = joinData(nyCounties, csvData);//Join county data with csv data
 
-                var colorScale = makeColorScale(csvData);
+                var colorScale = makeColorScale(csvData);//color scale variable, will make color scale based on csv data
 
                 setEnumerationUnits(nyCounties,map,path,colorScale);
 
@@ -81,25 +81,25 @@
             };
     };
     
-    function setGraticule(map,path){
+    function setGraticule(map,path){//Function to make the graticule
         var graticule = d3.geoGraticule()
             .step([5, 5]); //place graticule lines every 5 degrees of longitude and latitude
 
         //create graticule background
         var gratBackground = map.append("path")
-            .datum(graticule.outline()) //bind graticule background
-            .attr("class", "gratBackground") //assign class for styling
-            .attr("d", path) //project graticule
+            .datum(graticule.outline()) 
+            .attr("class", "gratBackground") //assign class for styling in css 
+            .attr("d", path) //project the graticule
 
         //create graticule lines
         var gratLines = map.selectAll(".gratLines") //select graticule elements that will be created
-            .data(graticule.lines()) //bind graticule lines to each element to be created
-            .enter() //create an element for each datum
-            .append("path") //append each element to the svg as a path element
-            .attr("class", "gratLines") //assign class for styling
-            .attr("d", path); //project graticule lines
+            .data(graticule.lines()) 
+            .enter() //element for each datum created
+            .append("path") //append to svg
+            .attr("class", "gratLines") //assign class for styling in css
+            .attr("d", path); //graticule line projection
     }
-
+    //function to join new york counties to corresponding csv data
     function joinData(nyCounties,csvData){
         //For loop iterating through csv
         for (var i = 0; i < csvData.length; i++) {
@@ -109,10 +109,10 @@
             console.log(csvCounty);
             //For loop iterating through geoJson
             for (var a = 0; a < nyCounties.length; a++) {
-                var geojsonProps = nyCounties[a].properties; //the current region geojson properties
+                var geojsonProps = nyCounties[a].properties; //the current county
                 var geojsonKey = geojsonProps.NAME; //the geojson primary key
 
-            //where primary keys match, transfer csv data to geojson properties object
+            //for matching primary keys transfer the csv data to geojson
                 if (geojsonKey == csvKey) {
                 //assign all attributes and values
                     attrArray.forEach(function (attr){
@@ -124,7 +124,7 @@
         };
         return nyCounties;
     }
-    
+    //Make the colorscale
     function makeColorScale(data){
         var colorClasses= [
             "#edf8fb",
@@ -136,7 +136,7 @@
 	    ];
         //create color scale generator for Quantile scale
         var colorScale = d3.scaleQuantile()
-        .range(colorClasses);
+        .range(colorClasses);//range of color classes
 
         var domainArray = [];
         for (var i =0; i<data.length; i++){
@@ -147,15 +147,15 @@
 
         return colorScale;
         };
-    
+    //Function to set enumeration units (counties of New York State)
     function setEnumerationUnits(nyCounties,map,path, colorScale){
         var county = map
-            .selectAll(".FINAL")
+            .selectAll(".NAME")
             .data(nyCounties)
             .enter()
             .append("path")
             .attr("class", function (d) {
-                return "county " + d.properties.FINAL;
+                return "county " + d.properties.NAME;
             })
             .attr("d", path)//d defines the coordinates of path
             .style("fill", function(d){
@@ -174,10 +174,10 @@
                 })
                 .on("mousemove", moveLabel);
 
-            var desc = county.append("desc").text ('{"stroke": "#000", "strokeowidth": "0.5px"}');
+            //var desc = county.append("desc").text ('{"stroke": "#000", "strokeowidth": "0.5px"}');
 
         }
-    
+    //Function to create D3 chart 
     function setChart(csvData, colorScale){
     
         //create a second svg element to hold the bar chart
@@ -187,14 +187,14 @@
             .attr("height", chartHeight)
             .attr("class", "chart");
     
-        //create a rectangle for chart background fill
+        //rectangle for chart background
         var chartBackground = chart.append("rect")
             .attr("class", "chartBackground")
             .attr("width", chartInnerWidth)
             .attr("height", chartInnerHeight)
             .attr("transform", translate);
     
-        //set bars for each province
+        //bars for each county
         var bars = chart.selectAll(".bar")
             .data(csvData)
             .enter()
@@ -203,7 +203,7 @@
                 return b[expressed]-a[expressed]
             })
             .attr("class", function(d){
-                return "bar " + d.FINAL;
+                return "bar " + d.NAME;
             })
             .attr("width", chartInnerWidth / csvData.length - 1)
             .on("mouseover", function(event,d){
@@ -241,7 +241,7 @@
         
         var desc = bars.append("desc").text('{"stroke": "none", "stroke-width": "0px"}');
         }
-
+        //function to create a drop down menu for ny agricultural practice attributes
     function createDropdown(csvData) {
             //Create a dropdown menu
             var dropdown = d3
@@ -288,16 +288,16 @@
 
                 var county = d3
                     .selectAll(".county")
-                    .transition()//transition between two style
+                    .transition()//transition between two styles
                     .duration(500)//delay transition
                     .style("fill", function (d) {
                         var value = d.properties[expressed];
                         if (value) {
                             return colorScale(value);
                         } else {
-                            return "#ccc";
+                            return "#ccc";//return grey if no value
                 }
-            });
+            });//Adding animation to the bars
                 var bars = d3.selectAll(".bar")
                     //Change the order of the bars and adjust timing of bar movement between attribute changes
                     .sort(function (a, b) {
@@ -317,14 +317,14 @@
             bars.attr("x", function (d, i) {
                 return i * (chartInnerWidth / n) + leftPadding;
             })
-                //size/resize bars
+                //size/resize bars based on changing attribute values
                 .attr("height", function (d, i) {
                     return 463 - yScale(parseFloat(d[expressed]));
                 })
                 .attr("y", function (d, i) {
                     return yScale(parseFloat(d[expressed])) + topBottomPadding;
                 })
-                //color/recolor bars
+                //recolor bars based on changing attribute values
                 .style("fill", function (d) {
                     var value = d[expressed];
                     if (value) {
@@ -333,7 +333,7 @@
                         return "#ccc";
                     }
                 });
-            var chartTitle = d3.select(".chartTitle")
+            var chartTitle = d3.select(".chartTitle")//Updating the chart title as attribute selection changes
                 .text("Number of Farms Practicing " + expressed.replace("alley", "Alley Cropping & Silvopasture")
                     .replace ("cov_crop", "Cover Cropping")
                     .replace("con_ease", "Conservation Easement")
@@ -344,23 +344,23 @@
                     .replace("graze", "Rotational/Intensive Grazing")
                     + " by county")
             };
-    function highlight(props) {
-        //change stroke
+    function highlight(props) {//Highlighting function 
+       
         var selected = d3
-            .selectAll("." + props.FINAL)
+            .selectAll("." + props.NAME)//When selecting bar or county
             .style("stroke", "blue")
             .style("stroke-width", "2");
         setLabel(props);
     }
-
+    //dehighlight function to prevent highlighting from being permanent
     function dehighlight() {
-        var county = d3
-            .selectAll(".FINAL")
+        var county = d3//dehighlight for map counties
+            .selectAll(".NAME")
             .style("stroke", "black")
             .style("stroke-width", "0.5)");
         
         var county = d3
-            .selectAll(".bar")
+            .selectAll(".bar")//dehighlight for bar counties
             .style("stroke", "none")
             .style("stroke-width", "0)")
             /*.style("stroke", function () {
@@ -377,13 +377,13 @@
 
             return styleObject[styleName];
         }
-        //remove info label
+        //remove info label and allow to change
         d3.select(".infolabel").remove();
-    }
+    }//Label properties for retrieve
     function setLabel(props) {
         console.log("Hello Label");
-        //label content
-        var labelAttribute = "<h1>" + "In " + props.NAME +",  "+ props[expressed]+ " farms practiced: " + expressed.replace("alley", "Alley Cropping & Silvopasture") 
+        //What the label will say; update label names
+        var labelAttribute = "<h1>" + "In " + props.NAME + " County"+ ",  "+ props[expressed]+ " farms practiced: " + expressed.replace("alley", "Alley Cropping & Silvopasture") 
             .replace ("cov_crop", "Cover Cropping")
             .replace("con_ease", "Conservation Easement")
             .replace("no_till", "No Tillage")
@@ -400,16 +400,14 @@
             .attr("class", "infolabel")
             .attr("id", props.NAME + "_label")
             .html(labelAttribute);
-
-        //var countyName = infolabel.append("div").attr("class", "County").html(props.NAME);
     }
-    //function to move info label with mouse
+    //function to move info label
     function moveLabel() {
         var labelWidth = d3.select(".infolabel")
         .node()
         .getBoundingClientRect()
         .width;
-        
+        //range of movement
         var x1 = event.clientX + 10,
             y1 = event.clientY - 75,
             x2 = event.clinentX -labelWidth -10,
