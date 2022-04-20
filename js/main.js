@@ -30,10 +30,10 @@
 
             //create Albers equal area conic projection centered on New York State
             var projection = d3.geoAlbers()
-                .center([0, 42.999])//centered on NY
-                .rotate([75.2179, 0, 0])
+                .center([0, 42.9])//centered on NY
+                .rotate([75.69, 0, 0])
                 .parallels([74, 40])//Standard parallels
-                .scale(5000)
+                .scale(5100)
                 .translate([width / 2, height / 2]);
 
             var path = d3.geoPath()
@@ -150,12 +150,12 @@
     
     function setEnumerationUnits(nyCounties,map,path, colorScale){
         var county = map
-            .selectAll(".county")
+            .selectAll(".FINAL")
             .data(nyCounties)
             .enter()
             .append("path")
             .attr("class", function (d) {
-                return "county " + d.properties. county;
+                return "county " + d.properties.FINAL;
             })
             .attr("d", path)//d defines the coordinates of path
             .style("fill", function(d){
@@ -163,7 +163,7 @@
                 if(value) {
                     return colorScale(d.properties[expressed]);//if there are no values for attribute, use grey color
                 } else {
-                    return "#ccc";
+                    return "#A8A8A8";
                 }
             })
                 .on("mouseover", function(event,d){
@@ -203,7 +203,7 @@
                 return b[expressed]-a[expressed]
             })
             .attr("class", function(d){
-                return "bar " + d.NAME;
+                return "bar " + d.FINAL;
             })
             .attr("width", chartInnerWidth / csvData.length - 1)
             .on("mouseover", function(event,d){
@@ -214,25 +214,25 @@
             })
             .on("mousemove", moveLabel); 
 
-        //create a text element for the chart title
+        //Text element for chart title and define title placement
         var chartTitle = chart.append("text")
-            .attr("x", 40)
-            .attr("y", 40)
+            .attr("x", 45)
+            .attr("y", 35)
             .attr("class", "chartTitle");
     
         updateChart(bars, csvData.length, colorScale);
     
-        //create vertical axis generator
+        //Create a vertical axis generator on left (y)
         var yAxis = d3.axisLeft()
             .scale(yScale);
     
-        //place axis
+        //Place the axis
         var axis = chart.append("g")
             .attr("class", "axis")
             .attr("transform", translate)
             .call(yAxis);
     
-        //create frame for chart border
+        //create a frame for border of chart
         var chartFrame = chart.append("rect")
             .attr("class", "chartFrame")
             .attr("width", chartInnerWidth)
@@ -243,7 +243,7 @@
         }
 
     function createDropdown(csvData) {
-            
+            //Create a dropdown menu
             var dropdown = d3
                 .select("body")
                 .append("select")
@@ -251,12 +251,13 @@
                 .on("change", function () {//Listening for the drop down menu value to change
                     changeAttribute(this.value, csvData);
                 });
-
+            //Create a title for the drop down menu named "Select Attribute"
             var titleOption = dropdown
                 .append("option")
                 .attr("class", "titleOption")
                 .attr("disabled", "true")
-                .text("Select Attribute");
+                .text("Select Attribute")
+                
             
             var attrOptions = dropdown//Adding options for each variable in drop down menu
                 
@@ -268,7 +269,7 @@
                     return d;
                 })
                 .text(function (d) {//Update attribute names in drop down menu
-                    return d.replace ("alley", "Alley Cropping & Silvapasture")
+                    return d.replace ("alley", "Alley Cropping & Silvopasture")
                         .replace ("cov_crop", "Cover Cropping")
                         .replace("con_ease", "Conservation Easement")
                         .replace("no_till", "No Tillage")
@@ -298,7 +299,7 @@
                 }
             });
                 var bars = d3.selectAll(".bar")
-                    //re-sort bars
+                    //Change the order of the bars and adjust timing of bar movement between attribute changes
                     .sort(function (a, b) {
                         return b[expressed] - a[expressed];
                     })
@@ -333,7 +334,7 @@
                     }
                 });
             var chartTitle = d3.select(".chartTitle")
-                .text("Number of Farms Practicing " + expressed.replace("alley", "Alley Cropping")
+                .text("Number of Farms Practicing " + expressed.replace("alley", "Alley Cropping & Silvopasture")
                     .replace ("cov_crop", "Cover Cropping")
                     .replace("con_ease", "Conservation Easement")
                     .replace("no_till", "No Tillage")
@@ -346,7 +347,7 @@
     function highlight(props) {
         //change stroke
         var selected = d3
-            .selectAll("." + props.NAME)
+            .selectAll("." + props.FINAL)
             .style("stroke", "blue")
             .style("stroke-width", "2");
         setLabel(props);
@@ -354,7 +355,7 @@
 
     function dehighlight() {
         var county = d3
-            .selectAll(".county")
+            .selectAll(".FINAL")
             .style("stroke", "black")
             .style("stroke-width", "0.5)");
         
@@ -382,7 +383,7 @@
     function setLabel(props) {
         console.log("Hello Label");
         //label content
-        var labelAttribute = "<h1>" + "In " + props.NAME +",  "+ props[expressed]+ " farms practiced: " + expressed.replace("alley", "Alley Cropping & Silvapasture") 
+        var labelAttribute = "<h1>" + "In " + props.NAME +",  "+ props[expressed]+ " farms practiced: " + expressed.replace("alley", "Alley Cropping & Silvopasture") 
             .replace ("cov_crop", "Cover Cropping")
             .replace("con_ease", "Conservation Easement")
             .replace("no_till", "No Tillage")
@@ -400,7 +401,7 @@
             .attr("id", props.NAME + "_label")
             .html(labelAttribute);
 
-        var countyName = infolabel.append("div").attr("class", "County").html(props.name);
+        //var countyName = infolabel.append("div").attr("class", "County").html(props.NAME);
     }
     //function to move info label with mouse
     function moveLabel() {

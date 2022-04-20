@@ -1,15 +1,26 @@
+html, body {
+    min-height: 120%;
+}
+
 body{
-    background-color: #ebebe0;
+    background-color: rgb(126, 143, 134, 0.5);
 }
 
 h1{
     color:black;
-    padding-left: 45px;
-
+    padding-left: 25px;
+    text-align: center;
 }
-
+h4{
+    color: black;
+    padding-left: 15px;
+    text-align: left;
+}
+p {
+    padding-left: 15px;
+}
 .map {
-    border: medium solid #999;
+    border: medium solid black;
     margin: 10px 0 0 20px;
 }
 .county {
@@ -18,9 +29,10 @@ h1{
     stroke-linecap: round;
 }
 .area {
-    fill: rgb(185, 161, 131, 0.80);
+    fill: rgb(182, 167, 145);
     opacity: 10;
-    stroke: #a09a93;
+    stroke: gray;
+    stroke-width: 0.5px;
 }
 .gratLines {
     fill: none;
@@ -35,24 +47,25 @@ h1{
     font-family: sans-serif;
 }
 .chartTitle {
-    font-family: sans-serif;
-    font-size: 0.9em;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: small;
     font-weight: bold;
     text-align: center;
+    position:fixed;
 }
 .chartFrame {
     fill: none;
-    stroke: #999;
+    stroke: black;
     stroke-width: 3px;
     shape-rendering: crispEdges;
 }
 .chartBackground {
-    fill: #a09a93;
+    fill: rgb(182, 167, 145);
 }
 .axis path,
 .axis line {
     fill: none;
-    stroke: #999;
+    stroke: rgb(11, 10, 10);
     stroke-width: 1px;
     shape-rendering: crispEdges;
 }
@@ -60,10 +73,11 @@ h1{
     font-family: sans-serif;
     font-size: 0.8em;
     fill: rgb(14, 13, 13);
+    font-weight: bold;
 }
 .dropdown {
     position: absolute;
-    top: 100px;
+    top: 260px;
     left: 40px;
     z-index: 10;
     font-family: sans-serif;
@@ -74,8 +88,9 @@ h1{
     box-shadow: 2px 2px 4px #999;
     background-color:light grey;
 }
-option {
+.option {
     font-weight: normal;
+    
 }
 
 .infolabel h1 {
@@ -84,19 +99,31 @@ option {
     display: inline-block;
     line-height: 1em;
     font-size: small;
-    color: #fff;
+    color: black;
 }
 
 .infolabel {
     margin: 0 15px 0 0;
     position: absolute;
-    height: 30px;
-    min-width: 80px;
+    height: 40px;
+    min-width: 60px;
     color: #fff;
-    background-color: rgb(80, 76, 76);
+    background-color: #d3d3c9;
     border: solid thin #fff;
     padding: 5px 10px;
     top: -75px;
+}
+.footer{
+    font-size: 4;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 35px;
+    background-color: rgb(126, 143, 134);
+    padding-bottom: 0px;
+    color: whitesmoke;
 }
 
 
